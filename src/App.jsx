@@ -20,7 +20,7 @@ function App() {
       <Header />
       <main>
         <Settings onSave={handleSettingsSave} />
-        <Timer initialMinutes={settings.pomodoro} />
+        <Timer initialMinutes={settings} />
       </main>
     </div>
   );
