@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-
+import PomodoroTabs from "../assets/PomodoroTabs"; // Asegúrate de que la ruta sea correcta
+import { AnimatePresence, motion } from "framer-motion";
 function Timer({ initialMinutes }) {
-  const [mode, setMode] = useState("pomodoro"); // 'pomodoro', 'shortBreak', 'longBreak'
-  const [sessionStep, setSessionStep] = useState(0);
+  const [mode, setMode] = useState("pomodoro");
+  const [sessionStep, setSessionStep] = useState(0); // 0–7
   const [secondsLeft, setSecondsLeft] = useState(initialMinutes.pomodoro * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
-  const [hasStartedOnce, setHasStartedOnce] = useState(false); // para evitar que se inicie solo al principio
+  const [hasStartedOnce, setHasStartedOnce] = useState(false);
 
   const formatTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -17,7 +18,7 @@ function Timer({ initialMinutes }) {
   };
 
   const resetTimer = () => {
-    setSecondsLeft(initialMinutes[mode] * 60);
+    setSecondsLeft(initialMinutes.pomodoro * 60);
     setIsRunning(false);
     setHasFinished(false);
     setHasStartedOnce(false);
@@ -60,8 +61,8 @@ function Timer({ initialMinutes }) {
                 break;
               case 7:
                 setMode("pomodoro");
-                setHasFinished(true); // ✅ mostrar modal al FINAL del ciclo
-                setSessionStep(0); // reiniciar para próxima vuelta
+                setHasFinished(true); // solo mostrar modal al final de todo
+                setSessionStep(0);
                 break;
               default:
                 setMode("pomodoro");
@@ -76,7 +77,7 @@ function Timer({ initialMinutes }) {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, mode]);
+  }, [isRunning, sessionStep]);
 
   useEffect(() => {
     const durationMap = {
@@ -86,8 +87,6 @@ function Timer({ initialMinutes }) {
     };
 
     setSecondsLeft(durationMap[mode] * 60);
-
-    // Solo auto-iniciar si ya empezó el ciclo
     if (hasStartedOnce) {
       setIsRunning(true);
     }
@@ -95,13 +94,26 @@ function Timer({ initialMinutes }) {
 
   return (
     <section className="timer-section">
-      <p className="mode-label">
-        {mode === "pomodoro" && "Pomodoro"}
-        {mode === "shortBreak" && "Descanso corto"}
-        {mode === "longBreak" && "Descanso largo"}
-      </p>
+      <PomodoroTabs
+        currentMode={mode}
+        onModeChange={(newMode) => {
+          setMode(newMode);
+          setIsRunning(false);
+          setHasStartedOnce(false);
+        }}
+      />
 
-      <h2>{formatTime(secondsLeft)}</h2>
+      <AnimatePresence mode="wait">
+        <motion.h2
+          key={`${mode}-${secondsLeft}`}
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -10, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {formatTime(secondsLeft)}
+        </motion.h2>
+      </AnimatePresence>
       <p>{isRunning ? "En curso" : "Pausado"}</p>
 
       <div className="controls">
@@ -114,7 +126,7 @@ function Timer({ initialMinutes }) {
       {hasFinished && (
         <div className="modal-backdrop">
           <div className="modal">
-            <h3>🎉 ¡Ciclo completo terminado!</h3>
+            <h3>🎉 ¡Ciclo Pomodoro completo!</h3>
             <p>¿Quieres empezar otro?</p>
             <div className="modal-buttons">
               <button onClick={resetTimer}>🔁 Reiniciar ciclo</button>
