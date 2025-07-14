@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const tabs = [
   { icon: "🍅", label: "Pomodoro", value: "pomodoro" },
@@ -27,26 +27,32 @@ function PomodoroTabs({ currentMode, onModeChange }) {
     <div style={container}>
       <nav style={nav}>
         <ul style={tabsContainer}>
-          {tabs.map((item) => (
-            <motion.li
-              key={item.label}
-              initial={false}
-              animate={{
-                backgroundColor: item === selectedTab ? "#eee" : "#eee0",
-              }}
-              style={tab}
-              onClick={() => handleTabClick(item)}
-            >
-              {`${item.icon} ${item.label}`}
-              {item === selectedTab ? (
-                <motion.div
-                  style={underline}
-                  layoutId="underline"
-                  id="underline"
-                />
-              ) : null}
-            </motion.li>
-          ))}
+          {tabs.map((item) => {
+            const isSelected = item === selectedTab;
+            return (
+              <motion.li
+                key={item.label}
+                initial={false}
+                animate={{ color: isSelected ? "#fff" : "#f05454" }}
+                style={{
+                  ...tab,
+                  fontWeight: isSelected ? 700 : 500,
+                }}
+                onClick={() => handleTabClick(item)}
+              >
+                <span
+                  style={{ zIndex: 1 }}
+                >{`${item.icon} ${item.label}`}</span>
+                {isSelected && (
+                  <motion.div
+                    layoutId="underline"
+                    style={underline}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </motion.li>
+            );
+          })}
         </ul>
       </nav>
     </div>
@@ -65,21 +71,14 @@ const nav = {
   justifyContent: "center",
 };
 
-const tabsStyles = {
-  listStyle: "none",
-  padding: 0,
-  margin: 0,
-  fontWeight: 500,
-  fontSize: 14,
-};
-
 const tabsContainer = {
   display: "flex",
   padding: "0.25rem",
-  backgroundColor: "#2e2e2e",
+  backgroundColor: "#05050531",
   borderRadius: "999px",
   listStyle: "none",
   gap: "0.5rem",
+  boxShadow: "0 0 10px rgba(234, 228, 228, 0.31)",
 };
 
 const tab = {
@@ -87,14 +86,13 @@ const tab = {
   padding: "0.6rem 1rem",
   borderRadius: "999px",
   cursor: "pointer",
-  color: "white",
-  fontWeight: "500",
   fontSize: "0.9rem",
   display: "flex",
   alignItems: "center",
   gap: "0.5rem",
   position: "relative",
   backgroundColor: "transparent",
+  overflow: "hidden",
 };
 
 const underline = {
@@ -102,7 +100,7 @@ const underline = {
   inset: 0,
   backgroundColor: "#f05454",
   borderRadius: "999px",
-  zIndex: -1,
+  zIndex: 0,
 };
 
 export default PomodoroTabs;
