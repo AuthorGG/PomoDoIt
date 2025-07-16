@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Timer from "./components/Timer";
 import Settings from "./components/Settings";
-
+import Footer from "./components/Footer";
 function App() {
   const [settings, setSettings] = useState({
     pomodoro: 25,
@@ -18,9 +18,11 @@ function App() {
   return (
     <div className="app-container">
       <Header />
+
       <main>
         <Settings onSave={handleSettingsSave} />
         <Timer initialMinutes={settings} />
+        <Footer />
       </main>
     </div>
   );
