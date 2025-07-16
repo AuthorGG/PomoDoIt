@@ -272,3 +272,31 @@ body {
     font-size: 1.8rem;
   }
 }
+.app-footer {
+  margin-top: 3rem;
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+  color: #aaa;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.footer-links a {
+  font-size: 1.4rem;
+  color: #f05454;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #d94343;
+}
+.header-icons {
+  display: none;
+}
