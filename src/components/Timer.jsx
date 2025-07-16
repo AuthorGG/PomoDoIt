@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PomodoroTabs from "../assets/PomodoroTabs"; // Asegúrate de que la ruta sea correcta
-import { AnimatePresence, motion } from "framer-motion";
+import CircularTimer from "./CircularTimer";
 function Timer({ initialMinutes }) {
   const [mode, setMode] = useState("pomodoro");
   const [sessionStep, setSessionStep] = useState(0); // 0–7
@@ -8,14 +8,6 @@ function Timer({ initialMinutes }) {
   const [isRunning, setIsRunning] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
   const [hasStartedOnce, setHasStartedOnce] = useState(false);
-
-  const formatTime = (secs) => {
-    const minutes = Math.floor(secs / 60);
-    const seconds = secs % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
 
   const resetTimer = () => {
     setSecondsLeft(initialMinutes.pomodoro * 60);
@@ -102,18 +94,12 @@ function Timer({ initialMinutes }) {
           setHasStartedOnce(false);
         }}
       />
+      <CircularTimer
+        timeLeft={secondsLeft}
+        totalTime={initialMinutes[mode] * 60}
+        mode={mode}
+      />
 
-      <AnimatePresence mode="wait">
-        <motion.h2
-          key={`${mode}-${secondsLeft}`}
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -10, opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {formatTime(secondsLeft)}
-        </motion.h2>
-      </AnimatePresence>
       <p>{isRunning ? "En curso" : "Pausado"}</p>
 
       <div className="controls">

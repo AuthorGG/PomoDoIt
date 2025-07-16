@@ -17,9 +17,11 @@ function Settings({ onSave }) {
 
   return (
     <div>
-      <button className="settings-toggle" onClick={toggleSettings}>
-        ⚙️
-      </button>
+      {!isOpen && (
+        <button className="settings-toggle" onClick={toggleSettings}>
+          ⚙️
+        </button>
+      )}
 
       <aside className={`settings-panel ${isOpen ? "open" : ""}`}>
         <button className="close-settings" onClick={toggleSettings}>
