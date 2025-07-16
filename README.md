@@ -1,12 +1,33 @@
-# React + Vite
+# 🍅 PomoDoIt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**PomoDoIt** is a minimalist and responsive Pomodoro timer app built with [React](https://react.dev/) and [Vite](https://vitejs.dev/). It helps you stay focused and productive by cycling through work and break sessions.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧠 Features
 
-## Expanding the ESLint configuration
+- ⏱ **Pomodoro Technique:** 25-minute work sessions, short and long breaks.
+- 🎨 **Responsive UI:** Clean, mobile-friendly interface.
+- 🔁 **Animated Circular Timer:** Visual countdown with mode-based color feedback.
+- ⚙️ **Customizable Settings:** Adjust durations for Pomodoro, short break, and long break.
+- 💾 **Stateful Controls:** Pause, reset and auto-switch between modes.
+- 🌓 **Dark theme by default**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠 Tech Stack
+
+- **React + Vite**
+- **Framer Motion** (for transitions)
+- **Vanilla CSS** (responsive layout)
+- **Deployed on Vercel**
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/pomodoit.git
+cd pomodoit
